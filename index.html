@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LNG</title>
+  <title>LNG Slideshow</title>
   <style>
     body {
       margin: 0;
@@ -68,7 +68,7 @@
 
   <div id="mainContent">
     <h1>DICK LNG</h1>
-    <button onclick="showFullScreen()">DICK LNG HERE!!</button>
+    <button onclick="startSlideshow()">DICK LNG HERE!!</button>
   </div>
 
   <img id="fullScreenImage" src="IMG_7694.png" alt="">
@@ -79,20 +79,47 @@
     const main = document.getElementById('mainContent');
     const sound = document.getElementById('customSound');
 
-    function showFullScreen() {
+    // Lista zdjęć do pokazu slajdów
+    const images = [
+      "IMG_7694.png",
+      "zump.jpg",
+      "kump.jpg",
+      "wump.jpg",
+      "bump.jpg",
+      "lump.jpg"
+    ];
+
+    let currentIndex = 0;
+    let slideshowInterval;
+
+    function startSlideshow() {
       main.style.display = 'none';
       img.style.display = 'block';
-      setTimeout(() => { img.style.opacity = 1; }, 50);
+      img.style.opacity = 1;
       sound.play();
+
+      // Pokaz slajdów co 5 sekund
+      slideshowInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        img.style.opacity = 0;
+        setTimeout(() => {
+          img.src = images[currentIndex];
+          img.style.opacity = 1;
+        }, 500);
+      }, 5000);
     }
 
+    // Kliknięcie w obrazek kończy pokaz
     img.addEventListener('click', () => {
+      clearInterval(slideshowInterval);
       img.style.opacity = 0;
       setTimeout(() => {
         img.style.display = 'none';
         main.style.display = 'flex';
         sound.pause();
         sound.currentTime = 0;
+        currentIndex = 0;
+        img.src = images[0];
       }, 500);
     });
   </script>
