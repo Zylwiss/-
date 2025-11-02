@@ -8,7 +8,8 @@
     body {
       margin: 0;
       font-family: 'Comic Sans MS', sans-serif;
-      background: linear-gradient(135deg, #FFD166, #FCA311);
+      background: url('dupa.jpg') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -85,7 +86,6 @@
       sound.play();
     }
 
-    // Kliknięcie w obrazek wraca do strony głównej
     img.addEventListener('click', () => {
       img.style.opacity = 0;
       setTimeout(() => {
@@ -99,6 +99,3 @@
 
 </body>
 </html>
-
-
-
