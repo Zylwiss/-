@@ -17,6 +17,7 @@
       height: 100vh;
       color: #333;
       text-align: center;
+      overflow: hidden;
     }
 
     #mainContent {
@@ -24,6 +25,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      z-index: 2;
     }
 
     h1 {
@@ -57,20 +59,37 @@
       height: 100vh;
       object-fit: contain;
       background-color: black;
-      z-index: 9999;
+      z-index: 1;
       opacity: 0;
       transition: opacity 1.5s ease-in-out;
       cursor: pointer;
+    }
+
+    #clock {
+      position: fixed;
+      top: 15px;
+      right: 25px;
+      font-size: 28px;
+      color: white;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+      font-weight: bold;
+      z-index: 3;
+      user-select: none;
     }
   </style>
 </head>
 <body>
 
+  <!-- Zegar -->
+  <div id="clock">--:--:--</div>
+
+  <!-- Główna zawartość -->
   <div id="mainContent">
     <h1>DICK LNG</h1>
     <button onclick="startSlideshow()">DICK LNG HERE!!</button>
   </div>
 
+  <!-- Obraz do pokazu -->
   <img id="fullScreenImage" src="IMG_7694.png" alt="">
   <audio id="customSound" src="TAK TAK.mp3"></audio>
 
@@ -78,6 +97,7 @@
     const img = document.getElementById('fullScreenImage');
     const main = document.getElementById('mainContent');
     const sound = document.getElementById('customSound');
+    const clock = document.getElementById('clock');
 
     // Lista zdjęć do pokazu slajdów
     const images = [
@@ -105,7 +125,7 @@
           img.src = images[currentIndex];
           img.style.opacity = 1;
         }, 500);
-      }, 1000);
+      }, 5000);
     }
 
     // Kliknięcie w obrazek kończy pokaz
@@ -121,9 +141,18 @@
         img.src = images[0];
       }, 500);
     });
+
+    // Aktualizacja zegara co sekundę
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      clock.textContent = `${h}:${m}:${s}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock(); // natychmiastowe uruchomienie
   </script>
 
 </body>
 </html>
-
-
